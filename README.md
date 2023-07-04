@@ -1,1 +1,1 @@
-# nodecg-automation
+# Nodecg Automation
