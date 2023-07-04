@@ -4,7 +4,7 @@ name: Build and publish manually
 on:
   push:
     branches:
-    - deploy
+    - main
 
 env:
   IMAGE_NAME: nodecg
