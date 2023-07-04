@@ -7,7 +7,7 @@ on:
     - main
 
 env:
-  IMAGE_NAME: nodecg
+  IMAGE_NAME: rods-registry/nodecg
   EVENT: example
   RELEASE_NAME: example-release
   CLUSTER: test-automation
@@ -41,7 +41,7 @@ jobs:
     - name: Build image # (callout-2)
       run: |
         VERSION=$(echo $GITHUB_SHA | head -c7)-$EVENT
-        DEPLOY_NAME=$CONTAINER_REGISTRY/$IMAGE_NAME
+        DEPLOY_NAME=$IMAGE_NAME
         make publish version=${VERSION} deploy_name=${DEPLOY_NAME} \
           registry=$CONTAINER_REGISTRY
 
