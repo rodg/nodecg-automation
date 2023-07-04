@@ -5,11 +5,6 @@ on:
   push:
     branches:
     - deploy
-    paths:
-    - 'config/**'
-    - 'docker/**'
-    - 'nodecg/**'
-    - '.github/workflows/**'
 
 env:
   IMAGE_NAME: nodecg
