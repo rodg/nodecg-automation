@@ -1,6 +1,7 @@
 target: "digitalocean"
 deployments:
   dashboard:
+    # leave as base for example
     container: ghcr.io/rodg/nodecg-base
     version: latest
     port: 9090
