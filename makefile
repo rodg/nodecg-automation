@@ -1,9 +1,8 @@
-registry:=registry.digitalocean.com
-image_name:=rods-registry/nodecg-base
-deploy_name:=rods-registry/nodecg
+registry?=registry.digitalocean.com
+deploy_name?=rods-registry/nodecg
+# version for dev and testing locally
 version?=$(shell find . -type f -exec sha1sum {} + | awk '{print $1}' | sort | sha1sum | cut -c 1-8)
 
-base_image = ${registry}/${image_name}
 deploy_image = ${registry}/${deploy_name}
 
 build: 

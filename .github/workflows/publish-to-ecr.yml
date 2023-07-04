@@ -11,6 +11,7 @@ env:
   EVENT: example
   RELEASE_NAME: example-release
   CLUSTER: test-automation
+  CONTAINER_REGISTRY: registry.digitalocean.com
 
 jobs:
   build_and_push:
@@ -38,10 +39,14 @@ jobs:
       run: doctl registry login --expiry-seconds 600
 
     - name: Build image # (callout-2)
-      run: make publish version=$(echo $GITHUB_SHA | head -c7)-$EVENT
+      run: |
+        VERSION=$(echo $GITHUB_SHA | head -c7)-$EVENT
+        DEPLOY_NAME=$CONTAINER_REGISTRY/$IMAGE_NAME
+        make publish version=${VERSION} deploy_name=${DEPLOY_NAME} \
+          registry=$CONTAINER_REGISTRY
 
     - name: Update deployment file
-      run: TAG=$(echo $GITHUB_SHA | head -c7)-$EVENT && sed -i 's|<VERSION>|'${TAG}'|' $GITHUB_WORKSPACE/config/values.yaml
+      run: TAG=${VERSION} && sed -i 's|<VERSION>|'${TAG}'|' $GITHUB_WORKSPACE/config/values.yaml
 
     - name: Save DigitalOcean kubeconfig with short-lived credentials
       run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 $CLUSTER
