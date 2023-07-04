@@ -1,0 +1,11 @@
+services:
+    nodecg:
+        build:
+            context: ./
+            dockerfile: ./docker/Dockerfile.nodecg
+        container_name: nodecg
+        ports:
+            - "9090:9090"
+        volumes:
+            - ./nodecg/bundles/better-rtmp-dash:/nodecg/bundles/better-rtmp-dash:ro
+            - ./nodecg/cfg:/nodecg/cfg

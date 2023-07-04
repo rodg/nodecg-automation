@@ -1,0 +1,36 @@
+{
+  "donation": {
+    "useTiltify": true,
+    "tiltifyCampaignID": 496076,
+    "tiltifyAuthToken": "{{TILTIFY_TOKEN}}",
+    "useOengus": false,
+    "oengusMarathon": "<marathon_shortname>",
+    "oengusUseSandbox": false,
+    "refreshTime": 10000
+  },
+  "tiltify": {
+    "active": false,
+    "campaignID": 496076,
+    "authToken": "{{TILTIFY_TOKEN}}",
+    "refreshTime": 10000
+  },
+  "customData": {
+    "useCustomHost": false
+  },
+  "sponsor": {
+    "fadeInTime": 1100,
+    "dwellTime": 10000,
+    "fadeOutTime": 750
+  },
+  "omnibar": {
+    "showHost": true,
+    "showGoal": true,
+    "numRuns": 2,
+    "numTargets": 2,
+    "numPolls": 2,
+    "numRewards": 2,
+    "fadeInTime": 1100,
+    "dwellTime": 10000,
+    "fadeOutTime": 750
+  }
+}

@@ -1,0 +1,4 @@
+.env
+nodecg/cfg/*
+temp
+.DS_Store

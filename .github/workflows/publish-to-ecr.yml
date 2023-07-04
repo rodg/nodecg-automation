@@ -1,0 +1,66 @@
+
+name: Build and publish manually
+
+on:
+  push:
+    branches:
+    - deploy
+    paths:
+    - 'config/**'
+    - 'docker/**'
+    - 'nodecg/**'
+    - '.github/workflows/**'
+
+env:
+  IMAGE_NAME: nodecg
+  EVENT: example
+  RELEASE_NAME: example-release
+  CLUSTER: test-automation
+
+jobs:
+  build_and_push:
+    runs-on: ubuntu-latest
+    steps:
+    - name: Checkout the repo # (callout-1)
+      uses: actions/checkout@v2
+
+    - name: Create the env file # (callout-1)
+      run: |
+        echo public.env > .env
+        echo "${{ secrets.ENV_FILE }}" >> .env
+
+    - name: Fill in the templates
+      run: |
+        pip install jinja2 python-dotenv
+        python3 config_generator.py
+
+    - name: Install doctl # (callout-3)
+      uses: digitalocean/action-doctl@v2
+      with:
+        token: ${{ secrets.DIGITALOCEAN_ACCESS_TOKEN }}
+
+    - name: Log in to DO Container Registry # (callout-4)
+      run: doctl registry login --expiry-seconds 600
+
+    - name: Build image # (callout-2)
+      run: make publish version=$(echo $GITHUB_SHA | head -c7)-$EVENT
+
+    - name: Update deployment file
+      run: TAG=$(echo $GITHUB_SHA | head -c7)-$EVENT && sed -i 's|<VERSION>|'${TAG}'|' $GITHUB_WORKSPACE/config/values.yaml
+
+    - name: Save DigitalOcean kubeconfig with short-lived credentials
+      run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 $CLUSTER
+
+    - name: Install Helm
+      run: curl https://raw.githubusercontent.com/helm/helm/main/scripts/get-helm-3 | bash
+
+    - name: Add marathon-charts helm repo
+      run: |
+        helm repo add marathon-charts https://rodg.github.io/marathon-charts/
+
+    - name: Deploy to DigitalOcean Kubernetes
+      run: |
+        helm install $RELEASE_NAME marathon-charts/nodecg-chart -f ./config/values.yaml
+
+    # - name: Verify deployment
+    #   run: kubectl rollout status deployment/nodecg-test --timeout=60s

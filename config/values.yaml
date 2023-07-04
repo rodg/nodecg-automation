@@ -1,0 +1,14 @@
+target: "digitalocean"
+deployments:
+  dashboard:
+    container: ghcr.io/rodg/nodecg-base
+    version: latest
+    port: 9090
+  rtmp:
+    controller: null
+    server:
+      enabled: false
+networking:
+  dashboard:
+    host: test.futaba.fans
+    port: 9090

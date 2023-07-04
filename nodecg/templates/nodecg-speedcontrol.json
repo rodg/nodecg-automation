@@ -1,0 +1,35 @@
+{
+  "language": "en",
+  "twitch": {
+    "enabled": false,
+    "clientID": "{{TWITCH_ID}}",
+    "clientSecret": "{{TWITCH_SECRET}}",
+    "redirectURI": "https://hig.speedruns.run/nodecg-speedcontrol/twitchauth",
+    "streamTitle": "{{STREAM_TITLE}}",
+    "streamDefaultGame": "Games + Demos",
+    "ffzIntegration": false
+  },
+  "horaro": {
+    "defaultURL": "https://horaro.org/event/schedule",
+    "disableSpeedrunComLookup": false
+  },
+  "oengus": {
+    "defaultMarathon": "SHORTNAME",
+    "useJapanese": false,
+    "disableSpeedrunComLookup": false
+  },
+  "customData": {
+    "run": [
+      {
+        "name": "Layout",
+        "key": "layout",
+        "ignoreMarkdown": false
+      },
+      {
+        "name": "Host",
+        "key": "host",
+        "ignoreMarkdown": false
+      }
+    ]
+  }
+}

@@ -1,0 +1,57 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: nodecg-test
+spec:
+  type: ClusterIP
+  ports:
+  - port: 9090
+    targetPort: 9090
+  selector:
+    app: nodecg-test
+---
+apiVersion: v1
+kind: PersistentVolumeClaim
+metadata:
+  name: nodecg-claim
+  labels:
+    app: nodecg-test
+spec:
+  accessModes:
+    - ReadWriteOnce
+  resources:
+    requests:
+      storage: 10Gi
+  storageClassName: do-block-storage
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: nodecg-test
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: nodecg-test
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      labels:
+        app: nodecg-test
+    spec:
+      containers:
+      - name: nodecg-test
+        image: registry.digitalocean.com/rods-registry/nodecg:<VERSION>
+        imagePullPolicy: Always
+        ports:
+        - containerPort: 9090
+        volumeMounts:
+            - mountPath: /nodecg/db
+              name: nodecg-db
+            - mountPath: /nodecg/logs
+              name: nodecg-db
+      volumes:
+        - name: nodecg-db
+          persistentVolumeClaim:
+            claimName: nodecg-claim

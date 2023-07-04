@@ -1,0 +1,29 @@
+{
+	"baseURL": "hig.speedruns.run",
+	"port": 9090,
+	"host": "0.0.0.0",
+	"exitOnUncaught": false,
+	"login": {
+		"forceHttpsReturn": true,
+		"enabled": false,
+		"sessionSecret": "{{SESSION_SECRET}}",
+		"discord": {
+			"enabled": true,
+			"clientID": "{{AUTH_DISCORD_ID}}",
+			"clientSecret": "{{AUTH_DISCORD_SECRET}}",
+			"scope": "identify",
+			"allowedUserIDs": [
+				"184038953920233472"
+			]
+		},
+		"twitch": {
+			"enabled": false,
+			"clientID": "{{AUTH_TWITCH_ID}}",
+			"clientSecret": "{{AUTH_TWITCH_SECRET}}",
+			"scope": "user:read:email",
+			"allowedUsernames": [
+				"rodg1400"
+			]
+		}
+	}
+}
