@@ -47,7 +47,7 @@ jobs:
 
     - name: Update values file
       run: |
-        TAG=${VERSION} && sed -i 's|<VERSION>|'${TAG}'|' $GITHUB_WORKSPACE/config/values.yaml
+        sed -i 's|<VERSION>|'${VERSION}'|' $GITHUB_WORKSPACE/config/values.yaml
 
     - name: Save DigitalOcean kubeconfig with short-lived credentials
       run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 $CLUSTER
@@ -61,7 +61,7 @@ jobs:
 
     - name: Deploy to DigitalOcean Kubernetes
       run: |
-        helm upgrade $RELEASE_NAME marathon-charts/nodecg-chart -f ./config/values.yaml
+        helm upgrade $RELEASE_NAME marathon-charts/nodecg-chart -f ./config/values.yaml --dry-run
 
     # - name: Verify deployment
     #   run: kubectl rollout status deployment/nodecg-test --timeout=60s
