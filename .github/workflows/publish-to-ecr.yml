@@ -47,6 +47,7 @@ jobs:
 
     - name: Update values file
       run: |
+        VERSION=$(echo $GITHUB_SHA | head -c7)-$EVENT
         sed -i 's|<VERSION>|'${VERSION}'|' $GITHUB_WORKSPACE/config/values.yaml
         cat $GITHUB_WORKSPACE/config/values.yaml
 
