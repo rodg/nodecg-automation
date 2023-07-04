@@ -55,7 +55,7 @@ jobs:
 
     - name: Deploy to DigitalOcean Kubernetes
       run: |
-        helm update $RELEASE_NAME marathon-charts/nodecg-chart -f ./config/values.yaml
+        helm upgrade $RELEASE_NAME marathon-charts/nodecg-chart -f ./config/values.yaml
 
     # - name: Verify deployment
     #   run: kubectl rollout status deployment/nodecg-test --timeout=60s
