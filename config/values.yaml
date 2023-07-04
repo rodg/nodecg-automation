@@ -2,8 +2,8 @@ target: "digitalocean"
 deployments:
   dashboard:
     # leave as base for example
-    container: ghcr.io/rodg/nodecg-base
-    version: latest
+    container: registry.digitalocean.com/rods-registry/nodecg
+    version: <VERSION>
     port: 9090
   rtmp:
     controller: null

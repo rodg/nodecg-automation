@@ -45,8 +45,9 @@ jobs:
         make publish version=${VERSION} deploy_name=${DEPLOY_NAME} \
           registry=$CONTAINER_REGISTRY
 
-    - name: Update deployment file
-      run: TAG=${VERSION} && sed -i 's|<VERSION>|'${TAG}'|' $GITHUB_WORKSPACE/config/values.yaml
+    - name: Update values file
+      run: |
+        TAG=${VERSION} && sed -i 's|<VERSION>|'${TAG}'|' $GITHUB_WORKSPACE/config/values.yaml
 
     - name: Save DigitalOcean kubeconfig with short-lived credentials
       run: doctl kubernetes cluster kubeconfig save --expiry-seconds 600 $CLUSTER
